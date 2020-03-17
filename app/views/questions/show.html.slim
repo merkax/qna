@@ -1,2 +1,19 @@
-h1= question.title
-p= question.body
+h1= @question.title
+p= @question.body
+- if current_user&.owner?(@question)
+  p= link_to "Delete question",
+              question_path(@question),
+              method: :delete,
+              data: { confrim: 'Are you sure?' }
+h3 Answers:
+- @question.answers.each do |answer|
+  -if answer.persisted?
+    p= answer.body
+    - if current_user&.owner?(answer)
+      p= link_to "Delete answer",
+                answer_path(answer),
+                method: :delete,
+                data: { confirm: ' Are you sure?' }
+      br
+
+= render 'answers/form'
