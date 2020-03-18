@@ -111,16 +111,18 @@ RSpec.describe QuestionsController, type: :controller do
         patch :update, params: { id: question, question: attributes_for(:question) }
         expect(response).to redirect_to question
       end
-      
     end
     
     context "with invalid attributes" do
       before { patch :update, params: { id: question, question: attributes_for(:question, :invalid) } }
+      
       it "does not change question" do
+        original_title = question.title
+        original_body = question.body
         question.reload
-
-        expect(question.title).to eq question.title
-        expect(question.body).to eq question.body
+        
+        expect(question.title).to eq original_title
+        expect(question.body).to eq original_body
       end
       
       it "re-renders edit view" do
@@ -143,6 +145,7 @@ RSpec.describe QuestionsController, type: :controller do
     
         it "redirects to index" do
           delete :destroy, params: { id: question }
+          
           expect(response).to redirect_to questions_path
         end
       end
@@ -150,10 +153,16 @@ RSpec.describe QuestionsController, type: :controller do
       context "user not creator question" do
         let(:not_author) { create(:user) }
         
-        before { login(:not_author) }
+        before { login(not_author) }
 
         it 'tries deletes the question' do
           expect{ delete :destroy, params: { id: question } }.to_not change(Question, :count)
+        end
+
+        it "redirects to index" do
+          delete :destroy, params: { id: question }
+          
+          expect(response).to redirect_to questions_path
         end
       end
     end

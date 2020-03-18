@@ -35,6 +35,7 @@ RSpec.describe AnswersController, type: :controller do
       it 'created by current user' do
         post :create, params: { answer: attributes_for(:answer), question_id: question, user: user }
         expect(assigns(:answer).user).to eq user
+        expect(assigns(:answer).question).to eq question
       end
 
       it "redirects to question show view" do
@@ -76,17 +77,23 @@ RSpec.describe AnswersController, type: :controller do
       context "user not creator answer" do
         let(:not_author) { create(:user) }
         
-        before { login(:not_author) }
+        before { login(not_author) }
 
         it 'tries deletes the answer' do
-          expect{ delete :destroy, params: { id: answer } }.to_not change(question.answers, :count)
+          expect{ delete :destroy, params: { id: answer } }.to_not change(Answer, :count)
+        end
+
+        it "redirects to index" do
+          delete :destroy, params: { id: answer }
+
+          expect(response).to redirect_to question_path(question)
         end
       end
     end
 
     context "Unauthenticated user" do
       it 'tries deletes the answer' do
-        expect{ delete :destroy, params: { id: answer } }.to_not change(question.answers, :count)
+        expect{ delete :destroy, params: { id: answer } }.to_not change(Answer, :count)
       end
 
       it 'redirects to sign in' do

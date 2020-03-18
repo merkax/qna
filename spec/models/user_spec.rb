@@ -6,10 +6,12 @@ RSpec.describe User, type: :model do
     it { should have_many(:questions).dependent(:destroy) }
   end
 
-  it { should validate_presence_of(:email) }
-  it { should validate_presence_of(:password) }
-
-  describe "Check authorship" do
+  describe "Validation" do
+    it { should validate_presence_of(:email) }
+    it { should validate_presence_of(:password) }
+  end
+  
+  describe "#owner?" do
     let(:user) { create(:user) }
     let(:question) { create(:question, user: user) } 
     let(:question1) { create(:question) }

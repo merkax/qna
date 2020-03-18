@@ -8,6 +8,7 @@ feature 'User can sign out' do
     click_on 'Log out'
 
     expect(page).to have_content 'Signed out successfully.'
+    expect(page).to_not have_link 'Log out'
   end
 
   scenario 'Unauthenticated user tries sign out' do

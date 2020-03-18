@@ -1,1 +1,7 @@
-
+- if answer.persisted?
+  p= answer.body
+  - if current_user&.owner?(answer)
+    p= link_to "Delete answer",
+                answer_path(answer),
+                method: :delete,
+                data: { confirm: ' Are you sure?' }
