@@ -7,7 +7,7 @@ p= @question.body
               data: { confrim: 'Are you sure?' }
 h3 Answers:
 
-== render @question.answers
+== render @question.answers.select(&:persisted?)
 
 br
 = render 'answers/form'
