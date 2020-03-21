@@ -5,9 +5,10 @@ p= @question.body
               question_path(@question),
               method: :delete,
               data: { confrim: 'Are you sure?' }
-h3 Answers:
 
-== render @question.answers.select(&:persisted?)
+h3 Answers:
+.answers
+  == render @question.answers.select(&:persisted?)
 
 br
 = render 'answers/form'
