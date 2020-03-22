@@ -4,3 +4,13 @@ p= answer.body
                 answer_path(answer),
                 method: :delete,
                 data: { confirm: ' Are you sure?' }
+    p= link_to "Edit",
+                '#',
+                class: 'edit-answer-link',
+                data: { answer_id: answer.id }
+
+= form_with model: answer, class: 'hidden', html: { id: "edit-answer-#{answer.id}" } do |f|
+  = f.label :body, 'Your answer'
+  = f.text_area :body
+  br
+  = f.submit 'Save'
