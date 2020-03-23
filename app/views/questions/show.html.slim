@@ -1,10 +1,24 @@
-h1= @question.title
-p= @question.body
-- if current_user&.owner?(@question)
-  p= link_to "Delete question",
-              question_path(@question),
-              method: :delete,
-              data: { confrim: 'Are you sure?' }
+.question
+  p.question-title = @question.title
+  p.question-body = @question.body
+  - if current_user&.owner?(@question)
+      p= link_to "Edit",
+                    '#',
+                    class: 'edit-question-link'
+      .question-edit-errors
+        = render 'shared/errors', resource: @question
+      = form_with model: @question, class: 'hidden', html: { id: "edit-question" } do |f|
+        = f.label :title
+        = f.text_field :title
+        br
+        = f.label :body
+        = f.text_area :body
+        br
+        = f.submit 'Save'
+      p= link_to "Delete question",
+                  question_path(@question),
+                  method: :delete,
+                  data: { confrim: 'Are you sure?' }
 
 h3 Answers:
 .answers

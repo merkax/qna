@@ -86,7 +86,6 @@ RSpec.describe AnswersController, type: :controller do
         expect(response).to render_template :update
       end
     end
-
   end
 
   describe 'DELETE #destroy' do
@@ -98,12 +97,12 @@ RSpec.describe AnswersController, type: :controller do
         before { login(user) }
         
         it 'deletes the answer' do
-          expect{ delete :destroy, params: { id: answer } }.to change(question.answers, :count).by(-1)
+          expect{ delete :destroy, params: { id: answer }, format: :js }.to change(question.answers, :count).by(-1)
         end
 
-        it 'redirects to question' do
-          delete :destroy, params: { id: answer }
-          expect(response).to redirect_to question_path(answer.question)
+        it 'render destroy view' do
+          delete :destroy, params: { id: answer }, format: :js
+          expect(response).to render_template :destroy
         end
       end
 
@@ -113,26 +112,72 @@ RSpec.describe AnswersController, type: :controller do
         before { login(not_author) }
 
         it 'tries deletes the answer' do
-          expect{ delete :destroy, params: { id: answer } }.to_not change(Answer, :count)
+          expect{ delete :destroy, params: { id: answer }, format: :js }.to_not change(Answer, :count)
         end
 
-        it "redirects to index" do
-          delete :destroy, params: { id: answer }
+        it "response" do
+          delete :destroy, params: { id: answer }, format: :js
 
-          expect(response).to redirect_to question_path(question)
+          expect(response.body).to be_empty #стоит проверять ?
         end
+      end
+    end
+  
+    context "Unauthenticated user" do
+      it 'tries deletes the answer' do
+        expect{ delete :destroy, params: { id: answer }, format: :js }.to_not change(Answer, :count)
+      end
+
+      it 'response' do
+        delete :destroy, params: { id: answer }, format: :js
+      
+        expect(response.status).to eq 401
+        expect(response.body).to eq 'You need to sign in or sign up before continuing.'
+      end
+    end
+  end
+
+  describe "PATCH #set_best" do
+    let(:author) { create(:user) }
+    let(:author_question) { create(:question, user: author) }
+    let!(:answer) { create(:answer, question: author_question) }
+
+    context 'User is author of question' do
+      before { login(author) }
+      
+      it 'set best answer' do
+        patch :set_best, params: { id: answer, answer: { best: true } }, format: :js
+        answer.reload
+        
+        expect(answer.best).to be true
+      end
+      
+      it 'render set best view' do
+        patch :set_best, params: { id: answer, answer: attributes_for(:answer) }, format: :js
+
+        expect(response).to render_template :set_best
+      end
+    end
+
+    context "User not author of question" do
+      before { login(user) }
+
+      it 'tries set best answer' do
+        patch :set_best, params: { id: answer, answer: { best: true } }, format: :js
+        answer.reload
+        
+        expect(answer.best).to be false
       end
     end
 
     context "Unauthenticated user" do
-      it 'tries deletes the answer' do
-        expect{ delete :destroy, params: { id: answer } }.to_not change(Answer, :count)
-      end
+      before { login(user) }
 
-      it 'redirects to sign in' do
-        delete :destroy, params: { id: answer }
-
-        expect(response).to redirect_to new_user_session_path
+      it 'tries set best answer' do
+        patch :set_best, params: { id: answer, answer: { best: true } }, format: :js
+        answer.reload
+        
+        expect(answer.best).to be false
       end
     end
   end

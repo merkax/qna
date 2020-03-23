@@ -2,35 +2,54 @@ require 'rails_helper'
 
 feature 'User can edit his answer' do
   
-  given!(:user) { create(:user) }
-  given!(:question) { create(:question) }
-  given!(:answer) { create(:answer, question: question, user: user) }
+  given(:author) { create(:user) }
+  given(:user) { create(:user) }
+  given(:question) { create(:question, user: author) }
+  given!(:answer) { create(:answer, question: question, user: author) }
 
 
   describe "Authenticated user", js: true do
-    background do
-      sign_in(user)
-      visit question_path(question)
-    end 
+    describe 'author answer' do
+        
+      background do
+        sign_in(author)
+        visit question_path(question)
+      end 
 
-    scenario 'edits his answer'do
-    click_on 'Edit'
-    
-    within '.answers' do
-        # save_and_open_page
-        fill_in "Your answer", with: "edited answer"
-        click_on 'Save'
+      scenario 'edits his answer'do
+        within '.answers' do
+          click_on 'Edit'
+          fill_in "Your answer", with: "edited answer"
+          click_on 'Save'
 
-        expect(page).to_not have_content answer.body
-        expect(page).to have_content "edited answer"
-        expect(page).to_not have_selector 'textarea'
+          expect(page).to_not have_content answer.body
+          expect(page).to have_content "edited answer"
+          expect(page).to_not have_selector 'textarea'
+        end
+      end
+
+      scenario 'edits his answer with errors' do
+        within '.answers' do
+          click_on 'Edit'
+          fill_in 'Your answer', with: ' '
+          click_on 'Save'
+
+          expect(page).to have_content answer.body
+        end
+        expect(page).to have_content "Body can't be blank"
       end
     end
-    scenario 'edits his answer with errors' do
-      
-    end
-    scenario "tries to edit other user's answer" do
-      
+
+    describe 'not author answer', js: true do
+      scenario "tries to edit other user's answer" do
+        sign_in(user)
+        visit question_path(question)
+        
+        within '.answers' do
+          expect(page).to have_content answer.body
+          expect(page).to_not have_link 'Edit'
+        end
+      end
     end
   end
 

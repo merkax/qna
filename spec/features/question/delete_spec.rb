@@ -6,7 +6,7 @@ feature 'Author can delete question' do
   given(:user) { create(:user) }
   given(:question) { create(:question, user: author) }
 
-  describe "Authenticated user" do
+  describe "Authenticated user", js: true do
     scenario "delete own question" do
       sign_in(author)
       visit question_path(question)

@@ -1,7 +1,7 @@
 class AnswersController < ApplicationController
   before_action :authenticate_user!, except: :show
   before_action :find_question, only: [:create]#, :update
-  before_action :find_answer, only: [:show, :update, :destroy]
+  before_action :find_answer, only: [:show, :update, :destroy, :set_best]
 
   def show
   end
@@ -22,7 +22,11 @@ class AnswersController < ApplicationController
   
   def destroy
     @answer.destroy if current_user.owner?(@answer)
-    redirect_to @answer.question
+  end
+  
+  def set_best
+    @answer.set_best! if current_user.owner?(@answer.question)
+    @question = @answer.question
   end
   
   private

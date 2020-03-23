@@ -1,16 +1,26 @@
-p= answer.body
-- if current_user&.owner?(answer)
-    p= link_to "Delete answer",
-                answer_path(answer),
-                method: :delete,
-                data: { confirm: ' Are you sure?' }
+div class="answer_#{answer.id}"
+  - if answer.best?
+      | Best answer:
+  p= answer.body
+
+  - if current_user&.owner?(answer.question) && !answer.best
+      p= link_to 'Set best',
+                set_best_answer_path(answer),
+                class: 'set-best-answer',
+                method: :patch,
+                remote: true
+  - if current_user&.owner?(answer)
     p= link_to "Edit",
                 '#',
                 class: 'edit-answer-link',
                 data: { answer_id: answer.id }
+    p= link_to "Delete answer",
+                answer_path(answer),
+                method: :delete,
+                remote: true
 
-= form_with model: answer, class: 'hidden', html: { id: "edit-answer-#{answer.id}" } do |f|
-  = f.label :body, 'Your answer'
-  = f.text_area :body
-  br
-  = f.submit 'Save'
+    = form_with model: answer, class: 'hidden', html: { id: "edit-answer-#{answer.id}" } do |f|
+      = f.label :body, 'Your answer'
+      = f.text_area :body
+      br
+      = f.submit 'Save'

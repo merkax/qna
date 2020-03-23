@@ -10,6 +10,7 @@ require("channels");
 require("jquery");
 require("popper.js");
 require("../scripts/answer");
+require("../scripts/question");
 
 
 // import 'bootstrap';

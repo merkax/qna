@@ -8,4 +8,4 @@ table
       th Title
       th Body
   tbody
-    = render @questions
+    = render @questions.select(&:persisted?)
