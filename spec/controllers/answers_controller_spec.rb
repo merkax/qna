@@ -58,32 +58,70 @@ RSpec.describe AnswersController, type: :controller do
 
   describe 'PATH #update' do
 
-    before { login(user) }
+    context "Authenticated user" do
+      
+      before { login(user) }
 
-    context "with valid attributes" do
-      it 'changes answer attributes' do
+      context "with valid attributes" do
+
+        it 'changes answer attributes' do
+          patch :update, params: { id: answer, answer: { body: 'new body' } }, format: :js
+          answer.reload
+
+          expect(answer.body).to eq 'new body'
+        end
+
+        it "renders update view" do
+          patch :update, params: { id: answer, answer: { body: 'new body' } }, format: :js
+          expect(response).to render_template :update
+        end
+      end
+
+      context "with invalid attributes" do
+        it 'does not change answer attributes' do
+          expect do
+            patch :update, params: { id: answer, answer: attributes_for(:answer, :invalid) } , format: :js
+          end.to_not change(answer, :body)
+        end
+
+        it "renders update view" do
+          patch :update, params: { id: answer, answer: attributes_for(:answer, :invalid) }, format: :js
+          expect(response).to render_template :update
+        end
+      end
+
+      context 'user not creator answer'do
+        let!(:not_author) { create(:user) }
+        
+        before { login(not_author) }
+
+        it "does not change attributes" do
+          patch :update, params: { id: answer, answer: { body: 'new body' } }, format: :js
+          answer.reload
+
+          expect(answer.body).to_not eq 'new body'
+        end
+
+        it "renders update view" do
+          patch :update, params: { id: answer, answer: attributes_for(:answer) }, format: :js
+          expect(response).to render_template :update
+        end
+      end
+    end
+    
+    context "Unauthenticated user" do
+      it "tries change attributes" do
         patch :update, params: { id: answer, answer: { body: 'new body' } }, format: :js
         answer.reload
 
-        expect(answer.body).to eq 'new body'
+        expect(answer.body).to_not eq 'new body'
       end
 
-      it "renders update view" do
-        post :update, params: { id: answer, answer: { body: 'new body' } }, format: :js
-        expect(response).to render_template :update
-      end
-    end
-
-    context "with invalid attributes" do
-      it 'does not change answer attributes' do
-        expect do
-          post :update, params: { id: answer, answer: attributes_for(:answer, :invalid) } , format: :js
-        end.to_not change(answer, :body)
-      end
-
-      it "renders update view" do
-        post :update, params: { id: answer, answer: attributes_for(:answer, :invalid) }, format: :js
-        expect(response).to render_template :update
+      it 'response' do
+        patch :update, params: { id: answer, answer: { body: 'new body' } }, format: :js
+      
+        expect(response.status).to eq 401
+        expect(response.body).to eq 'You need to sign in or sign up before continuing.'
       end
     end
   end
