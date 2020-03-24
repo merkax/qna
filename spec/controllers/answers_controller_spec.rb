@@ -91,7 +91,7 @@ RSpec.describe AnswersController, type: :controller do
       end
 
       context 'user not creator answer'do
-        let!(:not_author) { create(:user) }
+        let(:not_author) { create(:user) }
         
         before { login(not_author) }
 
@@ -119,7 +119,7 @@ RSpec.describe AnswersController, type: :controller do
 
       it 'response' do
         patch :update, params: { id: answer, answer: { body: 'new body' } }, format: :js
-      
+
         expect(response.status).to eq 401
         expect(response.body).to eq 'You need to sign in or sign up before continuing.'
       end
