@@ -149,7 +149,7 @@ RSpec.describe AnswersController, type: :controller do
         patch :set_best, params: { id: answer, answer: { best: true } }, format: :js
         answer.reload
         
-        expect(answer.best).to be true
+        expect(answer).to be_best
       end
       
       it 'render set best view' do
@@ -166,7 +166,7 @@ RSpec.describe AnswersController, type: :controller do
         patch :set_best, params: { id: answer, answer: { best: true } }, format: :js
         answer.reload
         
-        expect(answer.best).to be false
+        expect(answer).to_not be_best
       end
     end
 
@@ -177,7 +177,7 @@ RSpec.describe AnswersController, type: :controller do
         patch :set_best, params: { id: answer, answer: { best: true } }, format: :js
         answer.reload
         
-        expect(answer.best).to be false
+        expect(answer).to_not be_best
       end
     end
   end
