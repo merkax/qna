@@ -155,7 +155,7 @@ RSpec.describe AnswersController, type: :controller do
       it 'render set best view' do
         patch :set_best, params: { id: answer, answer: attributes_for(:answer) }, format: :js
 
-        expect(response).to render_template :set_best
+        expect(response).to render_template :set_best #стоит проверять ?
       end
     end
 
@@ -167,6 +167,12 @@ RSpec.describe AnswersController, type: :controller do
         answer.reload
         
         expect(answer).to_not be_best
+      end
+
+      it 'render set best view' do
+        patch :set_best, params: { id: answer, answer: attributes_for(:answer) }, format: :js
+
+        expect(response).to render_template :set_best
       end
     end
 
