@@ -1,0 +1,4 @@
+.attachments
+- if resource.files.attached?
+  - resource.files.each do |file|
+    p class="attachment-file-#{file.id}" = link_to file.filename.to_s, url_for(file)
