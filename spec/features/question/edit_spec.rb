@@ -55,8 +55,6 @@ feature 'User can edit his question' do
       end
     end
 
-
-
     describe 'not author question' do
       scenario "tries to edit other user's question" do
         sign_in(user)

@@ -11,6 +11,7 @@ require("jquery");
 require("popper.js");
 require("../scripts/answer");
 require("../scripts/question");
+require("../scripts/direct_uploads");
 
 
 // import 'bootstrap';

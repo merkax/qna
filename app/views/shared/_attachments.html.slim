@@ -1,4 +1,10 @@
-.attachments
 - if resource.files.attached?
-  - resource.files.each do |file|
-    p class="attachment-file-#{file.id}" = link_to file.filename.to_s, url_for(file)
+  .attachments
+    - resource.files.each do |file|
+      div class="attachment-file-#{file.id}"
+        = link_to file.filename.to_s, url_for(file)
+        - if current_user&.owner?(resource)
+          p= link_to "Delete file",
+                      attachment_path(file),
+                      method: :delete,
+                      remote: true
