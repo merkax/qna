@@ -4,6 +4,8 @@ div class="answer_#{answer.id}"
   p= answer.body
   = render 'shared/attachments', resource: answer
 
+  = render 'shared/links', resource: answer
+
   - if current_user&.owner?(answer.question) && !answer.best
       p= link_to 'Set best',
                 set_best_answer_path(answer),

@@ -4,7 +4,10 @@ RSpec.describe Answer, type: :model do
   describe "Association" do
     it { should belong_to :question }
     it { should belong_to :user }
+    it { should have_many(:links).dependent(:destroy) }
   end
+
+  it { should accept_nested_attributes_for :links }
 
   describe "Validation" do
     it { should validate_presence_of :body }
