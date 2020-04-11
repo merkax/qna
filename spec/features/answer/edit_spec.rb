@@ -6,7 +6,7 @@ feature 'User can edit his answer' do
   given(:user) { create(:user) }
   given(:question) { create(:question, user: author) }
   given!(:answer) { create(:answer, question: question, user: author) }
-
+  given(:google_url) { 'https://www.google.com/' }
 
   describe "Authenticated user", js: true do
     describe 'author answer' do
@@ -48,6 +48,21 @@ feature 'User can edit his answer' do
 
           expect(page).to have_link 'rails_helper.rb'
           expect(page).to have_link 'spec_helper.rb'
+        end
+      end
+
+      scenario 'edits his answers and add new link'do
+        within '.answers' do
+          click_on 'Edit'
+          
+          click_on 'add link'
+
+          fill_in "Link name",	with: 'google'
+          fill_in "Url",	with: google_url
+
+          click_on 'Save'
+
+          expect(page).to_not have_link 'google', href: google_url
         end
       end
     end

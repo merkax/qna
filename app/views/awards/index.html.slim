@@ -1,0 +1,11 @@
+h1= current_user.email
+
+- if current_user.awards.empty?
+  | you have no awards
+-else
+- @awards.each do |award|
+  p= award.question.title
+  p= award.name
+  p= image_tag award.image if award.image.attached?
+
+= link_to 'back', root_path

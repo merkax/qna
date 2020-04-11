@@ -5,6 +5,7 @@ feature 'User can edit his question' do
   given(:author) { create(:user) }
   given(:user) { create(:user) }
   given!(:question) { create(:question, user: author) }
+  given(:google_url) { 'https://www.google.com/' }
 
 
   describe "Authenticated user", js: true do
@@ -53,6 +54,21 @@ feature 'User can edit his question' do
           expect(page).to have_link 'spec_helper.rb'
         end
       end
+
+      scenario 'edits his question and add new link'do
+        within '.question' do
+          click_on 'Edit'
+          
+          click_on 'add link'
+
+          fill_in "Link name",	with: 'google'
+          fill_in "Url",	with: google_url
+
+          click_on 'Save'
+
+          expect(page).to_not have_link 'google', href: google_url
+        end
+      end
     end
 
     describe 'not author question' do
@@ -71,7 +87,7 @@ feature 'User can edit his question' do
   describe "Unauthenticated user" do
     background { visit question_path(question) }
 
-    scenario 'can ton edit question' do
+    scenario "can't edit question" do
       expect(page).to_not have_link 'Edit'
     end
   end

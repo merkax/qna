@@ -1,0 +1,5 @@
+.links
+  = f.fields_for :links do |l|
+    = render 'shared/link_fields', f: l
+  .add_link
+    = link_to_add_association 'add link', f, :links, partial: 'shared/link_fields'

@@ -1,5 +1,14 @@
-.links
-  p Links:
-  ul
-  - resource.links.each do |link|
-    li= link_to link.name, link.url
+- if resource.links.present?
+  .links
+    p Links:
+    - resource.links.each do |link|
+      .div class="link-#{link.id}"
+        - if link.gist?
+          = javascript_link_tag(link)
+        - else
+          li= link_to link.name, link.url
+        - if current_user&.owner?(link.linkable)
+          p= link_to "Delete link",
+                    link_path(link),
+                    method: :delete,
+                    remote: true

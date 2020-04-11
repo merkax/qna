@@ -1,0 +1,8 @@
+.award
+  = f.fields_for :award do |a|
+    p
+      = a.label :name
+      = a.text_field :name
+    p
+      = a.label :image
+      = a.file_field :image

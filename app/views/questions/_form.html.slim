@@ -11,14 +11,7 @@
   = f.file_field :files, multiple: true, direct_upload: true
   br
 
-  p Links:
-  p
-    = f.fields_for :links do |l|
-      p
-        = l.label :name, 'Link name'
-        = l.text_field :name
-      p
-        = l.label :url
-        = l.text_field :url
+  = render 'shared/add_links', f: f
+  = render 'award_form', f: f
 
   = f.submit 'Ask'
