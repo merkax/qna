@@ -4,6 +4,7 @@
     - resource.links.each do |link|
       .div class="link-#{link.id}"
         - if link.gist?
+          = link_to link.name, link.url
           = javascript_link_tag(link)
         - else
           li= link_to link.name, link.url
