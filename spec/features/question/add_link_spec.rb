@@ -60,7 +60,7 @@ feature 'User can add links to question' do
       click_on 'Ask'
       
       expect(page).to have_content 'Who is Matz?'
-      expect(page).to_not have_link 'My gist', href: gist_url
+      expect(page).to have_link 'My gist', href: gist_url
     end
   end
 

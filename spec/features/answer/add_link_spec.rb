@@ -61,7 +61,7 @@ feature 'User can add links to answer' do
       click_on 'New answer'
 
       expect(page).to have_content 'Who is Matz?'
-      expect(page).to_not have_link 'My gist', href: gist_url
+      expect(page).to have_link 'My gist', href: gist_url
     end
   end
 
