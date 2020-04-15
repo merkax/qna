@@ -1,14 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe Answer, type: :model do
+  it_behaves_like 'linkable'
+
   describe "Association" do
     it { should belong_to :question }
     it { should belong_to :user }
-    it { should have_many(:links).dependent(:destroy) }
-  end
-
-  describe "Nested attributes" do
-    it { should accept_nested_attributes_for :links }
   end
 
   describe "Validation" do
