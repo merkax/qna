@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe AnswersController, type: :controller do
+  it_behaves_like 'voted'
+  
   let(:user) { create(:user) }
   let(:question) { create(:question) }
   let(:answer) { create(:answer, question: question, user: user) }
@@ -156,7 +158,7 @@ RSpec.describe AnswersController, type: :controller do
         it "response" do
           delete :destroy, params: { id: answer }, format: :js
 
-          expect(response.body).to be_empty #стоит проверять ?
+          expect(response.body).to be_empty
         end
       end
     end
@@ -193,7 +195,7 @@ RSpec.describe AnswersController, type: :controller do
       it 'render set best view' do
         patch :set_best, params: { id: answer, answer: attributes_for(:answer) }, format: :js
 
-        expect(response).to render_template :set_best #стоит проверять ?
+        expect(response).to render_template :set_best
       end
     end
 

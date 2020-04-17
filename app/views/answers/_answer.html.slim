@@ -21,14 +21,16 @@ div class="answer_#{answer.id}"
                 answer_path(answer),
                 method: :delete,
                 remote: true
+  - else 
+    = render 'shared/voted', resource: answer
 
-    = form_with model: answer, class: 'hidden', html: { id: "edit-answer-#{answer.id}" } do |f|
-      = f.label :body, 'Your answer'
-      = f.text_area :body
-      br
-      = f.label :files
-      = f.file_field :files, multiple: true, direct_upload: true
-      br
-      = render 'shared/add_links', f: f
+  = form_with model: answer, class: 'hidden', html: { id: "edit-answer-#{answer.id}" } do |f|
+    = f.label :body, 'Your answer'
+    = f.text_area :body
+    br
+    = f.label :files
+    = f.file_field :files, multiple: true, direct_upload: true
+    br
+    = render 'shared/add_links', f: f
 
-      = f.submit 'Save'
+    = f.submit 'Save'

@@ -12,7 +12,7 @@ require("popper.js");
 require("../scripts/answer");
 require("../scripts/question");
 require("../scripts/direct_uploads");
-
+require("../scripts/voted");
 
 // import 'bootstrap';
 // Uncomment to copy all static images under ../images to the output folder and reference

@@ -1,25 +1,28 @@
-.question
-  p.question-title = @question.title
-  p.question-body = @question.body
+div class="question_#{@question.id}"
+  .question
+    p.question-title = @question.title
+    p.question-body = @question.body
     
-  .question-files
-    = render 'shared/attachments', resource: @question
+    .question-files
+      = render 'shared/attachments', resource: @question
 
-  = render 'shared/links', resource: @question
+    = render 'shared/links', resource: @question
 
-  - if current_user&.owner?(@question)
-      p= link_to "Edit",
+    - if current_user&.owner?(@question)
+        p= link_to "Edit",
                     '#',
                     class: 'edit-question-link'
-      p= link_to "Delete question",
+        p= link_to "Delete question",
                   question_path(@question),
                   method: :delete,
                   data: { confrim: 'Are you sure?' }
 
-      .question-edit-errors
-        = render 'shared/errors', resource: @question
-      .edit-form
-        = render 'questions/edit_form'
+        .question-edit-errors
+          = render 'shared/errors', resource: @question
+        .edit-form
+          = render 'questions/edit_form'
+    - else 
+      = render 'shared/voted', resource: @question
 
 h3 Answers:
 .answers
