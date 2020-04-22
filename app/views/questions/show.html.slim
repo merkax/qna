@@ -21,8 +21,17 @@ div class="question_#{@question.id}"
           = render 'shared/errors', resource: @question
         .edit-form
           = render 'questions/edit_form'
-    - else 
+    - else
       = render 'shared/voted', resource: @question
+
+    .question-comments
+      - if @question.comments.exists?
+        p Comments:
+        .comments
+          = render @question.comments
+      - if user_signed_in?
+        .question-comment-form
+          = render 'comments/form', resource: @question
 
 h3 Answers:
 .answers

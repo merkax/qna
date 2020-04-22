@@ -3,10 +3,11 @@ p= link_to "Your awards", awards_path
 
 h1 All questions:
 
-table
-  thead
-    tr
-      th Title
-      th Body
-  tbody
-    = render @questions.select(&:persisted?)
+.questions-list
+  table
+    thead
+      tr
+        th Title
+        th Body
+    tbody
+      = render @questions.select(&:persisted?)

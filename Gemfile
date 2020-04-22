@@ -34,6 +34,8 @@ gem 'bootstrap'
 gem 'jquery-rails'
 gem 'popper_js', '~> 1.16'
 gem "cocoon"
+gem 'gon'
+gem 'handlebars-source', '~> 4.0', '>= 4.0.5'
 
 gem 'aws-sdk-s3', require: false
 gem "octokit", "~> 4.0"

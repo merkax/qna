@@ -1,6 +1,7 @@
 class Answer < ApplicationRecord
   include Linkable
   include Votable
+  include Commentable
 
   default_scope { order(best: :desc).order(:created_at) }
 

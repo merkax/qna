@@ -11,6 +11,7 @@ require("jquery");
 require("popper.js");
 require("../scripts/answer");
 require("../scripts/question");
+require("../scripts/comments");
 require("../scripts/direct_uploads");
 require("../scripts/voted");
 
@@ -24,3 +25,6 @@ require("../scripts/voted");
 import 'bootstrap';
 import 'cocoon-js';
 // import "cocoon";
+// document.addEventListener("turbolinks:load", () => {
+//   $('[data-toggle="tooltip"]').tooltip()
+// })
