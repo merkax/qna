@@ -23,15 +23,16 @@ div class="answer_#{answer.id}"
                 remote: true
   - else 
     = render 'shared/voted', resource: answer
+    
   
-  .answer-comments
-    - if answer.comments.exists?
-      p Comments:
-      .comments
-        = render answer.comments
-    - if user_signed_in?
-      .answer-comment-form
-        = render 'comments/form', resource: answer
+  p Comments:
+  div class="answer-comments-#{answer.id}"
+    = render answer.comments
+
+  - if user_signed_in?
+    div class="comment-errors-answer-#{answer.id}"
+    div class="answer-comment-form-#{answer.id}"
+      = render 'comments/form', resource: Comment.new, url: answer_comments_path(answer)
 
   = form_with model: answer, class: 'hidden', html: { id: "edit-answer-#{answer.id}" } do |f|
     = f.label :body, 'Your answer'

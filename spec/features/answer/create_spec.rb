@@ -43,6 +43,30 @@ feature 'User can create answer', %q{
       expect(page).to have_content 'rails_helper.rb'
       expect(page).to have_content 'spec_helper.rb'
     end
+
+    context 'multiple sessions' do
+      scenario 'answer appears on another user', js: true do
+        Capybara.using_session('user') do
+          sign_in(user)
+          visit question_path(question)
+        end
+
+        Capybara.using_session('guest') do
+          visit question_path(question)
+        end
+
+        Capybara.using_session('user') do
+          fill_in "Body", with: 'answer body'
+          click_on 'New answer'
+
+          expect(page).to have_content 'answer body'
+        end
+
+        Capybara.using_session('guest') do
+          expect(page).to have_content 'answer body'
+        end
+      end
+    end
   end
 
   describe "Unauthenticated user" do

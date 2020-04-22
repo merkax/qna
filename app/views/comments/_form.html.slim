@@ -1,6 +1,4 @@
-.comment-errors
-
-= form_with model: [resource, Comment.new], class: 'new-comment', remote: true, method: :post  do |f| #обязательно явно указывать data: { type: :json } ?
+= form_for resource, url: url, remote: true do |f|
   = f.label :body, 'comment'
   = f.text_area :body
   br

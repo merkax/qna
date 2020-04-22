@@ -6,4 +6,3 @@ document.addEventListener('turbolinks:load', function () {
     $('form#edit-answer-' + answerId).removeClass('hidden')
   })
 });
-

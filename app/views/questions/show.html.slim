@@ -24,14 +24,15 @@ div class="question_#{@question.id}"
     - else
       = render 'shared/voted', resource: @question
 
-    .question-comments
-      - if @question.comments.exists?
-        p Comments:
-        .comments
-          = render @question.comments
-      - if user_signed_in?
-        .question-comment-form
-          = render 'comments/form', resource: @question
+
+    p Comments:
+    div class="question-comments"
+      = render @question.comments
+
+    - if user_signed_in?
+      .comment-errors-question
+      div class="question-comment-form"
+        = render 'comments/form', resource: Comment.new, url: question_comments_path(@question)
 
 h3 Answers:
 .answers

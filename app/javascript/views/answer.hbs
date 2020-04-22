@@ -4,37 +4,43 @@
     <div class="links">
       <p>Links: </p>
       {{#each links}}
-        <div class="link-#{this.id}">
-          <a href="{{this.url}}">{{this.name}}</a>
-        </div>
+      <div class="link-#{this.id}">
+        <a href="{{this.url}}">{{this.name}}</a>
+      </div>
       {{/each}}
     </div>
 
     {{#unless answer.best}}
-      {{#if question_author}}
-        <p>
-          <a class="set-best-answer" data-remote="true" rel="nofollow" data-method="patch" href="/answers/{{answer.id}}/set_best">Set best</a>
-        </p>
-      {{/if}}
+    {{#if question_author}}
+    <p>
+      <a class="set-best-answer" data-remote="true" rel="nofollow" data-method="patch"
+        href="/answers/{{answer.id}}/set_best">Set best</a>
+    </p>
+    {{/if}}
     {{/unless}}
-    
+
     <div class="vote">
       <p>
-        <a href="/answers/{{answer.id}}/vote_cancel" class="vote-cancel" data-type="json" data-remote="true" rel="nofollow" data-method="delete">cancel vote</a>
+        <a href="/answers/{{answer.id}}/vote_cancel" class="vote-cancel" data-type="json" data-remote="true"
+          rel="nofollow" data-method="delete">cancel vote</a>
       </p>
       <p>
-        <a href="/answers/{{answer.id}}/vote_up" class="vote-up" data-type="json" data-remote="true" rel="nofollow" data-method="patch">Like</a>
+        <a href="/answers/{{answer.id}}/vote_up" class="vote-up" data-type="json" data-remote="true" rel="nofollow"
+          data-method="patch">Like</a>
       </p>
       <p class="rating">
         <span>{{rating}}</span>
       </p>
       <p>
-        <a href="/answers/{{answer.id}}/vote_down" class="vote-down" data-type="json" data-remote="true" rel="nofollow" data-method="patch">Dislike</a>
+        <a href="/answers/{{answer.id}}/vote_down" class="vote-down" data-type="json" data-remote="true" rel="nofollow"
+          data-method="patch">Dislike</a>
       </p>
     </div>
-  </span>
+
+    <p> Comments:
+      <div class="answer-comments-{{answer.id}}">
+        {{answer.comments}}
+      </div>
+    </p>
+    </span>
 </div>
-
-
-
-

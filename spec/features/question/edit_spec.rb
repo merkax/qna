@@ -25,7 +25,6 @@ feature 'User can edit his question' do
 
           expect(page).to_not have_content question.body
           expect(page).to have_content "edited question title"
-          expect(page).to_not have_selector 'textarea'
         end
       end
 

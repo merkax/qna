@@ -5,12 +5,7 @@ class CommentsController < ApplicationController
   def create
     @comment = commentable.comments.new(comment_params)
     @comment.user = current_user
-
-    if @comment.save
-      render json: @comment
-    else
-      render json: @comment.errors.full_messages, status: :unprocessable_entity
-    end
+    @comment.save
   end
   
   private
@@ -21,7 +16,11 @@ class CommentsController < ApplicationController
   end
 
   def question_id
-    commentable.class == Question ? commentable.id : commentable.question.id #question_id
+    if commentable.is_a?(Question)
+      commentable.id
+    else
+      commentable.question.id
+    end
   end
 
   def publish_comment
