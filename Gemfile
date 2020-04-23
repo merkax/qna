@@ -39,6 +39,8 @@ gem 'handlebars-source', '~> 4.0', '>= 4.0.5'
 
 gem 'aws-sdk-s3', require: false
 gem "octokit", "~> 4.0"
+gem 'omniauth'
+gem 'omniauth-github'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -47,6 +49,8 @@ group :development, :test do
   gem 'factory_bot_rails'
   gem 'pry', '~> 0.12.2'
   gem 'dotenv-rails'
+  gem 'letter_opener'
+  gem 'capybara-email'
 end
 
 group :development do
