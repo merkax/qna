@@ -35,6 +35,7 @@ RSpec.configure do |config|
   config.include Devise::Test::ControllerHelpers, type: :controller
   config.include ControllerHelpers, type: :controller
   config.include FeatureHelpers, type: :feature
+  config.include OmniauthHelpers
 
   Capybara.javascript_driver = :selenium_chrome_headless
   
@@ -72,6 +73,8 @@ RSpec.configure do |config|
   FactoryBot::SyntaxRunner.class_eval do
     include ActionDispatch::TestProcess
   end
+  
+  OmniAuth.config.test_mode = true
 end
 
 Shoulda::Matchers.configure do |config|
