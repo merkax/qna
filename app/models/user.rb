@@ -8,16 +8,12 @@ class User < ApplicationRecord
   
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,
-         :omniauthable, omniauth_providers: [:github, :vkontakte]
+         :confirmable, :omniauthable, omniauth_providers: [:github, :vkontakte]
 
   def self.find_for_oauth(auth)
     FindForOauthService.new(auth).call
   end
-   
-  def create_authorization(auth)
-    self.authorizations.create(provider: auth.provider, uid: auth.uid)
-  end
-  
+
   def owner?(resource)
     resource.user_id == id
   end

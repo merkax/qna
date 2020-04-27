@@ -5,8 +5,8 @@ RSpec.describe OauthCallbacksController, type: :controller do
     @request.env["devise.mapping"] = Devise.mappings[:user]
   end
 
-  describe 'Github' do
-    let(:oauth_data) { { 'provider' => 'github', 'uid' => 123 } }
+  describe 'Provider' do
+    let(:oauth_data) { mock_auth_hash('github', email:'new@user.com') }
 
     it 'finds user from oauth data' do
       allow(request.env).to receive(:[]).and_call_original
@@ -34,59 +34,29 @@ RSpec.describe OauthCallbacksController, type: :controller do
 
     context "user does not exist" do
       before do
-        allow(User).to receive(:find_for_oauth)
-        get :github
+        allow(request.env).to receive(:[]).and_call_original
+        allow(request.env).to receive(:[]).with('omniauth.auth').and_return(oauth_data)
       end
-      
+
+      it 'create new user' do
+        expect { get :github }.to change(User, :count).by 1
+      end
+
       it 'does not login user' do
         expect(subject.current_user).to_not be
       end
-
-      it 'redirects to root path' do
-        expect(response).to redirect_to root_path
-      end
-    end
-  end
-
-  describe 'Vkontakte' do
-    let(:oauth_data) { { 'provider' => 'vkontakte', 'uid' => 123 } }
-
-    it 'finds user from oauth data' do
-      allow(request.env).to receive(:[]).and_call_original
-      allow(request.env).to receive(:[]).with('omniauth.auth').and_return(oauth_data)
-      expect(User).to receive(:find_for_oauth).with(oauth_data)
-      get :github
     end
 
-    context "user exists" do
-      let!(:user) { create(:user) }
+    context "user does not exist and provider without email" do
+      let(:oauth_data_without_email) { mock_auth_hash('vkontakte', email: nil) }
 
       before do
-        allow(User).to receive(:find_for_oauth).and_return(user)
-        get :vkontakte
-      end
-      
-      it 'login user if it exists' do
-        expect(subject.current_user).to eq user
+        allow(request.env).to receive(:[]).and_call_original
+        allow(request.env).to receive(:[]).with('omniauth.auth').and_return(oauth_data_without_email)
       end
 
-      it 'redirects to root path' do
-        expect(response).to redirect_to root_path
-      end
-    end
-
-    context "user does not exist" do
-      before do
-        allow(User).to receive(:find_for_oauth)
-        get :vkontakte
-      end
-      
-      it 'does not login user' do
-        expect(subject.current_user).to_not be
-      end
-
-      it 'redirects to root path' do
-        expect(response).to redirect_to root_path
+      it 'create new user' do
+        expect { get :vkontakte }.to_not change(User, :count)
       end
     end
   end

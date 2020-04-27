@@ -13,7 +13,10 @@ feature 'User can sign up' do
       fill_in "Password confirmation", with: user_attribute[:password_confirmation]
       click_on 'Sign up'
       
-      expect(page).to have_content 'Welcome! You have signed up successfully.'
+      expect(page).to have_content 'A message with a confirmation link has been sent to your email address. Please follow the link to activate your account.'
+      open_email(user_attribute[:email])
+      current_email.click_link('Confirm my account')
+      expect(page).to have_content 'Your email address has been successfully confirmed.'
     end
 
     scenario 'tries sign up with errors attribute' do

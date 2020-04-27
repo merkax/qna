@@ -1,0 +1,8 @@
+h2 Send confirmation instructions in your email
+= form_for(User.new, url: user_confirmation_path, method: :post, local: true) do |f|
+  .field
+    = f.label :email
+    br
+    = f.email_field :email
+  .actions
+    = f.submit "send"

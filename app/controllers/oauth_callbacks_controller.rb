@@ -1,6 +1,5 @@
 class OauthCallbacksController < Devise::OmniauthCallbacksController
   def github
-    #render json: request.env['omniauth.auth']
     authorize('github')
   end
 
@@ -18,7 +17,10 @@ class OauthCallbacksController < Devise::OmniauthCallbacksController
       sign_in_and_redirect @user, event: :authentication
       set_flash_message(:notice, :success, kind: provider) if is_navigational_format?
     else
-      redirect_to root_path, alert: 'something went wrong'
+      session["devise.provider"] = auth_data.provider
+      session["devise.uid"] = auth_data.uid
+
+      redirect_to new_user_confirmation_path
     end
   end
 end
