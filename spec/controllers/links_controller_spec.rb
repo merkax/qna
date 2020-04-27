@@ -28,9 +28,9 @@ RSpec.describe LinksController, type: :controller do
           expect { delete :destroy, params: { id: question.links.first.id }, format: :js }.to_not change(question.links, :count)
         end
 
-        it 'render destroy view' do
+        it 'return forbidden' do
           delete :destroy, params: { id: question.links.first.id }, format: :js
-          expect(response).to render_template :destroy
+          expect(response).to have_http_status(:forbidden)
         end
       end
     end

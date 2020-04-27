@@ -27,9 +27,9 @@ RSpec.describe AttachmentsController, type: :controller do
           expect { delete :destroy, params: { id: resource.files.first.id }, format: :js }.to_not change(resource.files, :count)
         end
 
-        it 'render destroy view' do
+        it 'return forbidden' do
           delete :destroy, params: { id: resource.files.first.id }, format: :js
-          expect(response).to render_template :destroy
+          expect(response).to have_http_status(:forbidden)
         end
       end
     end

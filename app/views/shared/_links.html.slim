@@ -8,7 +8,7 @@
           = javascript_link_tag(link)
         - else
           li= link_to link.name, link.url
-        - if current_user&.owner?(link.linkable)
+        - if can?(:destroy, link.linkable)
           p= link_to "Delete link",
                     link_path(link),
                     method: :delete,

@@ -8,10 +8,11 @@ div class="question_#{@question.id}"
 
     = render 'shared/links', resource: @question
 
-    - if current_user&.owner?(@question)
+    - if can?(:update, @question)
         p= link_to "Edit",
                     '#',
                     class: 'edit-question-link'
+    - if can?(:destroy, @question)
         p= link_to "Delete question",
                   question_path(@question),
                   method: :delete,
@@ -29,7 +30,7 @@ div class="question_#{@question.id}"
     div class="question-comments"
       = render @question.comments
 
-    - if user_signed_in?
+    - if can?(:create, Comment)
       .comment-errors-question
       div class="question-comment-form"
         = render 'comments/form', resource: Comment.new, url: question_comments_path(@question)

@@ -22,18 +22,51 @@ RSpec.describe Ability, type: :model do
   describe 'for user' do
     let(:user) { create(:user) }
     let(:other_user) { create(:user) }
-
+    let(:question_user) {create(:question, user: user) } 
+    let(:question_other_user) {create(:question, user: other_user) }
+    let(:answer_user) {create(:answer, user: user) }
+    let(:answer_other_user) {create(:answer, user: other_user) }
+    
     it { should_not be_able_to :manage, :all }
     it { should be_able_to :read, :all }
+    
+    context "Question" do
+      it { should be_able_to :create, Question }
 
-    it { should be_able_to :create, Question } 
-    it { should be_able_to :create, Answer } 
-    it { should be_able_to :create, Comment } 
+      it { should be_able_to [:update, :destroy], question_user }
+      it { should_not be_able_to [:update, :destroy], question_other_user }
 
-    it { should be_able_to :update, create(:question, user: user) } 
-    it { should_not be_able_to :update, create(:question, user: other_user) } 
+      it { should be_able_to [:vote_up, :vote_down, :vote_cancel], question_other_user } 
+      it { should_not be_able_to [:vote_up, :vote_down, :vote_cancel], question_user } 
+    end
+    
 
-    it { should be_able_to :update, create(:answer, user: user) } 
-    it { should_not be_able_to :update, create(:answer, user: other_user) } 
+    context "Answer" do
+      it { should be_able_to :create, Answer } 
+      
+      it { should be_able_to [:update, :destroy], answer_user }
+      it { should_not be_able_to [:update, :destroy], answer_other_user }
+      
+      it { should be_able_to :set_best, create(:answer, question: question_user) }
+      it { should_not be_able_to :set_best, create(:answer, question: question_other_user) }
+      
+      it { should be_able_to [:vote_up, :vote_down, :vote_cancel], answer_other_user }
+      it { should_not be_able_to [:vote_up, :vote_down, :vote_cancel], answer_user }
+    end
+
+    context 'Comment' do
+      it { should be_able_to :create, Comment }
+    end
+
+    context "Link" do
+      it { should be_able_to :destroy, create(:link, linkable: question_user) }
+      it { should_not be_able_to :destroy, create(:link, linkable: question_other_user) }
+      it { should be_able_to :destroy, create(:link, linkable: answer_user) }
+      it { should_not be_able_to :destroy, create(:link, linkable: answer_other_user) }
+    end
+    
+    context "Attachment" do
+      it { should be_able_to :destroy, ActiveStorage::Attachment }
+    end
   end
 end

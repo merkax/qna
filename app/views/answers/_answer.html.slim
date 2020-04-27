@@ -12,11 +12,12 @@ div class="answer_#{answer.id}"
                 class: 'set-best-answer',
                 method: :patch,
                 remote: true
-  - if current_user&.owner?(answer)
+  - if can?(:update, answer)
     p= link_to "Edit",
                 '#',
                 class: 'edit-answer-link',
                 data: { answer_id: answer.id }
+  - if can?(:destroy, answer)
     p= link_to "Delete answer",
                 answer_path(answer),
                 method: :delete,
@@ -29,7 +30,7 @@ div class="answer_#{answer.id}"
   div class="answer-comments-#{answer.id}"
     = render answer.comments
 
-  - if user_signed_in?
+  - if can?(:create, Comment)
     div class="comment-errors-answer-#{answer.id}"
     div class="answer-comment-form-#{answer.id}"
       = render 'comments/form', resource: Comment.new, url: answer_comments_path(answer)

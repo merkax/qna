@@ -104,9 +104,10 @@ RSpec.describe AnswersController, type: :controller do
           expect(answer.body).to_not eq 'new body'
         end
 
-        it "renders update view" do
+        it "return forbidden'" do
           patch :update, params: { id: answer, answer: attributes_for(:answer) }, format: :js
-          expect(response).to render_template :update
+
+          expect(response).to have_http_status(:forbidden)
         end
       end
     end
@@ -209,10 +210,9 @@ RSpec.describe AnswersController, type: :controller do
         expect(answer).to_not be_best
       end
 
-      it 'render set best view' do
+      it 'return forbidden' do
         patch :set_best, params: { id: answer, answer: attributes_for(:answer) }, format: :js
-
-        expect(response).to render_template :set_best
+        expect(response).to have_http_status(:forbidden)
       end
     end
 
