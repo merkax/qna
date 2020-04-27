@@ -5,6 +5,8 @@ class AnswersController < ApplicationController
   before_action :find_question, only: [:create]
   before_action :find_answer, only: [:show, :update, :destroy, :set_best]
   after_action :publish_answer, only: :create
+  
+  authorize_resource
 
   def show
   end

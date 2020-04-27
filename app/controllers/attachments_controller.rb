@@ -2,6 +2,8 @@ class AttachmentsController < ApplicationController
   before_action :authenticate_user!
   before_action :find_attachment, only: :destroy
 
+  authorize_resource
+
   def destroy
     @attachment.purge if current_user&.owner?(@attachment.record)
   end
