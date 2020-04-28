@@ -6,7 +6,7 @@ div class="answer_#{answer.id}"
 
   = render 'shared/links', resource: answer
 
-  - if current_user&.owner?(answer.question) && !answer.best
+  -if !answer.best && can?(:set_best, answer)
       p= link_to 'Set best',
                 set_best_answer_path(answer),
                 class: 'set-best-answer',
