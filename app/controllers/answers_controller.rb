@@ -21,16 +21,16 @@ class AnswersController < ApplicationController
   end
   
   def update
-    @answer.update(answer_params) if current_user.owner?(@answer)
+    @answer.update(answer_params)
     @question = @answer.question
   end
   
   def destroy
-    @answer.destroy if current_user.owner?(@answer)
+    @answer.destroy
   end
   
   def set_best
-    @answer.set_best! if current_user.owner?(@answer.question)
+    @answer.set_best!
     @question = @answer.question
   end
   

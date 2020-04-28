@@ -5,7 +5,7 @@ class AttachmentsController < ApplicationController
   authorize_resource
 
   def destroy
-    @attachment.purge if current_user&.owner?(@attachment.record)
+    @attachment.purge
   end
   
   private

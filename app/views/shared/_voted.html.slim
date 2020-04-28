@@ -1,5 +1,5 @@
 .vote
-  - if current_user && !current_user.owner?(resource)
+  - if can?(:vote_up, resource) && can?(:vote_down, resource) && can?(:vote_cancel, resource)
     p= link_to "cancel vote",
                     polymorphic_path(resource, action: :vote_cancel),
                     method: :delete,
