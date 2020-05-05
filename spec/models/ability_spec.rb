@@ -68,5 +68,13 @@ RSpec.describe Ability, type: :model do
     context "Attachment" do
       it { should be_able_to :destroy, ActiveStorage::Attachment }
     end
+
+    context "Profiles" do
+      it { should be_able_to :me, user }
+      it { should_not be_able_to :me, other_user }
+
+      it { should be_able_to :index, user }
+      it { should be_able_to :index, other_user }
+    end
   end
 end
