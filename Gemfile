@@ -43,7 +43,7 @@ gem 'omniauth'
 gem 'omniauth-github'
 gem 'omniauth-vkontakte', '~> 1.5', '>= 1.5.1'
 gem 'cancancan'
-gem 'doorkeeper', '~> 5.3', '>= 5.3.1'
+gem 'doorkeeper', '~> 5.3'
 gem 'active_model_serializers', '~> 0.10'
 gem 'oj'
 
