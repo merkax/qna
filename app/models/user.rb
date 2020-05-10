@@ -5,7 +5,8 @@ class User < ApplicationRecord
   has_many :votes, dependent: :destroy
   has_many :comments, dependent: :destroy
   has_many :authorizations, dependent: :destroy
-  
+  has_many :subscriptions, dependent: :destroy
+
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,
          :confirmable, :omniauthable, omniauth_providers: [:github, :vkontakte]
@@ -16,5 +17,9 @@ class User < ApplicationRecord
 
   def owner?(resource)
     resource.user_id == id
+  end
+
+  def subscribed?(resource)
+    resource.subscriptions.where(user: self).exists?
   end
 end

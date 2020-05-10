@@ -3,6 +3,7 @@ class QuestionsController < ApplicationController
   
   before_action :authenticate_user!, except: [:index, :show]
   before_action :load_question, only: [:show, :edit, :update, :destroy]
+  before_action :load_subscription, only: :show
   after_action :publish_question, only: :create
 
   authorize_resource
@@ -53,6 +54,10 @@ class QuestionsController < ApplicationController
     @question = Question.with_attached_files.find(params[:id])
   end
 
+  def load_subscription
+    @subscription = @question.subscriptions.find_by(user: current_user)
+  end
+  
   def question_params
     params.require(:question).permit(:title, :body, files: [],
                                     links_attributes: [:id, :name, :url, :_destroy],

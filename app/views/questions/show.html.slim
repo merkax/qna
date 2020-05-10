@@ -2,7 +2,11 @@ div class="question_#{@question.id}"
   .question
     p.question-title = @question.title
     p.question-body = @question.body
-    
+
+    .subscription
+      - if can?(:create, Subscription)
+        = render 'subscriptions/subscription', resource: @question
+
     .question-files
       = render 'shared/attachments', resource: @question
 

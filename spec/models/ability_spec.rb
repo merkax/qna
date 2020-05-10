@@ -76,5 +76,12 @@ RSpec.describe Ability, type: :model do
       it { should be_able_to :index, user }
       it { should be_able_to :index, other_user }
     end
+
+    context "Subscription" do
+      it { should be_able_to :create, Subscription }
+
+      it { should be_able_to :destroy, create(:subscription, user: user) }
+      it { should_not be_able_to :destroy, create(:subscription,user: other_user) }
+    end
   end
 end
