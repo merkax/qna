@@ -18,5 +18,13 @@ FactoryBot.define do
         question.files.attach(file1, file2)
       end
     end
+
+    trait :yesterday_question do
+      created_at { Date.yesterday}
+    end
+
+    trait :two_day_ago_question do
+      created_at { Date.yesterday - 1 }
+    end
   end
 end
