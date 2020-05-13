@@ -1,3 +1,5 @@
 - if user_signed_in?
   p= link_to "Your awards", awards_path
   p= link_to  "Log out", destroy_user_session_path, method: :delete
+.search
+  = render 'search/form'

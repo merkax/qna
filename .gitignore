@@ -33,3 +33,8 @@ yarn-debug.log*
 
 # ENV
 .env
+
+dump.rdb
+
+config/*.sphinx.conf
+db/sphinx

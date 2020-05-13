@@ -1,0 +1,12 @@
+= form_for :search, url: search_index_path, method: :get, local: true  do |f|
+  = f.label :query, 'Запрос'
+  br
+  = f.text_field :query
+  br
+  = f.label :scope, 'Параметры запроса'
+  = f.select :scope, options_for_select(([%w(All thinking_sphinx),
+                                         %w(Question question),
+                                         %w(Answer answer),
+                                         %w(Comment comment),
+                                         %w(User user)]))
+  = f.submit 'Search', class:"btn btn-success text-light mx-2 my-2"
