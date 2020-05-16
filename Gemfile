@@ -53,7 +53,7 @@ gem 'whenever', require: false
 gem 'mysql2'
 gem 'thinking-sphinx', '~> 4.4', '>= 4.4.1'
 gem 'mini_racer'
-# gem 'sassc-rails'
+gem 'sassc-rails'
 # gem 'sassc', '< 2.1.0'
 
 group :development, :test do
