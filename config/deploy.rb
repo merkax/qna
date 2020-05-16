@@ -13,7 +13,6 @@ set :deploy_to, "/home/deployer/qna"
 set :deploy_user, 'deployer'
 # Default value for :format is :airbrussh.
 # set :format, :airbrussh
-
 # You can configure the Airbrussh format using :format_options.
 # These are the defaults.
 # set :format_options, command_output: true, log_file: "log/capistrano.log", color: :auto, truncate: :auto
@@ -29,6 +28,7 @@ append :linked_dirs, "log", "tmp/pids", "tmp/cache", "tmp/sockets", "public/syst
 
 # Default value for default_env is {}
 # set :default_env, { path: "/opt/ruby/bin:$PATH" }
+set :assets_manifests, ['app/assets/config/manifest.js']
 
 # Default value for local_user is ENV['USER']
 # set :local_user, -> { `git config user.name`.chomp }
