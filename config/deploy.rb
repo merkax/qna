@@ -2,8 +2,8 @@
 lock "~> 3.14.0"
 
 set :application, "qna"
-set :repo_url, "git://github.com/merkax/qna.git"
-# set :repo_url, "git@github.com:merkax/qna.git"
+#set :repo_url, "git://github.com/merkax/qna.git"
+ set :repo_url, "git@github.com:merkax/qna.git"
 # set :repo_url, "https://github.com/merkax/qna.git"
 
 # Default branch is :master
