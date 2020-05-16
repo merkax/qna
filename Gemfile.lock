@@ -451,7 +451,7 @@ DEPENDENCIES
   rails-controller-testing
   rspec-rails (~> 4.0.0.beta)
   sass-rails (>= 6)
-  sassc (~> 2.2.0)
+  sassc (~> 2.2.1)
   selenium-webdriver
   shoulda-matchers
   sidekiq (~> 5.2.8)
