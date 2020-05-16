@@ -2,8 +2,9 @@
 lock "~> 3.14.0"
 
 set :application, "qna"
+set :repo_url, "git://github.com/merkax/qna.git"
 # set :repo_url, "git@github.com:merkax/qna.git"
-set :repo_url, "https://github.com/merkax/qna.git"
+# set :repo_url, "https://github.com/merkax/qna.git"
 
 # Default branch is :master
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
@@ -28,7 +29,7 @@ append :linked_dirs, "log", "tmp/pids", "tmp/cache", "tmp/sockets", "public/syst
 
 # Default value for default_env is {}
 # set :default_env, { path: "/opt/ruby/bin:$PATH" }
-set :assets_manifests, ['app/assets/config/manifest.js']
+# set :assets_manifests, ['app/assets/config/manifest.js']
 
 # Default value for local_user is ENV['USER']
 # set :local_user, -> { `git config user.name`.chomp }
