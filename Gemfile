@@ -53,6 +53,7 @@ gem 'whenever', require: false
 gem 'mysql2'
 gem 'thinking-sphinx', '~> 4.4', '>= 4.4.1'
 gem 'mini_racer'
+gem 'sassc-rails'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
