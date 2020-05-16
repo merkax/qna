@@ -17,7 +17,7 @@ module Qna
     # the framework and any gems in your application.
     config.active_job.queue_adapter = :sidekiq
     config.autoload_paths += [config.root.join('app')]
-    config.assets.precompile += %w[ *.scss *.js]
+    #config.assets.precompile += %w[ *.scss *.js]
 
     config.generators do |g|
       g.test_framework :rspec,
