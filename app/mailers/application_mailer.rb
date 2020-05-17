@@ -1,4 +1,5 @@
 class ApplicationMailer < ActionMailer::Base
-  default from: 'from@example.com'
+  default from: Rails.application.credentials[Rails.env.to_sym][:email][:sender]
+  
   layout 'mailer'
 end
