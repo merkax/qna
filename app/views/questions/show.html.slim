@@ -28,7 +28,7 @@ div class="question_#{@question.id}"
           = render 'questions/edit_form'
     - else
       = render 'shared/voted', resource: @question
-
+    hr
 
     p Comments:
     div class="question-comments"
@@ -38,10 +38,11 @@ div class="question_#{@question.id}"
       .comment-errors-question
       div class="question-comment-form"
         = render 'comments/form', resource: Comment.new, url: question_comments_path(@question)
-
+      hr
 h3 Answers:
 .answers
   == render @question.answers.select(&:persisted?)
-
 br
-= render 'answers/form'
+.new_answer
+  p  New answer
+  = render 'answers/form'
