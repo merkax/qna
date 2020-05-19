@@ -27,6 +27,7 @@ append :linked_files, "config/database.yml", "config/master.key", "config/thinkn
 # Default value for linked_dirs is []
 append :linked_dirs, "log", "tmp/pids", "tmp/cache", "tmp/sockets", "public/system", 'storage', "public/packs", ".bundle", "node_modules"
 
+after 'deploy:publishing', 'unicorn:restart'
 # Default value for default_env is {}
 # set :default_env, { path: "/opt/ruby/bin:$PATH" }
 # set :assets_manifests, ['app/assets/config/manifest.js']
