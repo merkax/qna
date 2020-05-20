@@ -3,11 +3,12 @@
 
 h1 All questions:
 
-.questions-list
-  table
-    thead
-      tr
-        th Title
-        th Body
-    tbody
-      = render @questions.select(&:persisted?)
+- cache collection_cache_key_for(:question) do
+  .questions-list
+    table
+      thead
+        tr
+          th Title
+          th Body
+      tbody
+        = render @questions.select(&:persisted?)

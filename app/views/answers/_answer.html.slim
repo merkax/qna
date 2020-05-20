@@ -1,7 +1,8 @@
 div class="answer_#{answer.id}"
   - if answer.best?
       | Best answer:
-  p= answer.body
+  - cache answer do
+    p= answer.body
   = render 'shared/attachments', resource: answer
 
   = render 'shared/links', resource: answer

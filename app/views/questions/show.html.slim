@@ -1,7 +1,8 @@
 div class="question_#{@question.id}"
   .question
-    p.question-title = @question.title
-    p.question-body = @question.body
+    - cache @question do
+      p.question-title = @question.title
+      p.question-body = @question.body
 
     .subscription
       - if can?(:create, Subscription)

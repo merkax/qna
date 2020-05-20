@@ -3,13 +3,14 @@
     p Links:
     - resource.links.each do |link|
       .div class="link-#{link.id}"
-        - if link.gist?
-          = link_to link.name, link.url
-          = javascript_link_tag(link)
-        - else
-          li= link_to link.name, link.url
-        - if can?(:destroy, link.linkable)
-          p= link_to "Delete link",
-                    link_path(link),
-                    method: :delete,
-                    remote: true
+        - cache link do
+          - if link.gist?
+            = link_to link.name, link.url
+            = javascript_link_tag(link)
+          - else
+            li= link_to link.name, link.url
+          - if can?(:destroy, link.linkable)
+            p= link_to "Delete link",
+                      link_path(link),
+                      method: :delete,
+                      remote: true
