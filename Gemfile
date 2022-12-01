@@ -4,7 +4,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '2.6.3'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 6.0.3'
+gem 'rails', '~> 6.0.6'
 # Use postgresql as the database for Active Record
 gem 'pg', '>= 0.18', '< 2.0'
 # Use Puma as the app server
@@ -41,13 +41,13 @@ gem 'aws-sdk-s3', require: false
 gem "octokit", "~> 4.0"
 gem 'omniauth'
 gem 'omniauth-github'
-gem 'omniauth-vkontakte', '~> 1.5', '>= 1.5.1'
+gem 'omniauth-vkontakte', '~> 1.8'
 gem 'cancancan'
 gem 'doorkeeper', '~> 5.3', '>= 5.3.1'
 gem 'active_model_serializers', '~> 0.10'
 gem 'oj'
 # gem 'sidekiq'
-gem 'sidekiq', '~> 5.2.8'
+gem 'sidekiq', '~> 5.2.10'
 gem 'sinatra', require: false
 gem 'whenever', require: false
 gem 'mysql2'
