@@ -9,7 +9,7 @@
     "bootstrap": "4.4.1",
     "cocoon-js": "^0.0.5",
     "handlebars": "4.7.3",
-    "handlebars-loader": "1.7.1",
+    "handlebars-loader": "1.7.3",
     "jquery": "^3.4.1",
     "popper.js": "^1.16.1",
     "turbolinks": "^5.2.0"
